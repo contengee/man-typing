@@ -1,11 +1,19 @@
 from flask import Flask, render_template, jsonify
+from flask_sqlalchemy import SQLAlchemy
 import random
+import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', template_folder='templates')
 
-# 単語リスト。実際にはもっと大きなリストにするか、
-# 外部のデータソース（データベースやAPI）から取得します。
-words = ["apple", "banana", "cherry", "date", "elderberry"]
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'  # SQLiteデータベースのパス
+db = SQLAlchemy(app)
+
+class Word(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    word = db.Column(db.String(80), unique=True, nullable=False)
+
+    def __repr__(self):
+        return '<Word %r>' % self.word
 
 @app.route('/')
 def index():
@@ -13,8 +21,9 @@ def index():
 
 @app.route('/api/word')
 def random_word():
-    word = random.choice(words)
-    return jsonify(word=word)
+    word = random.choice(Word.query.all())
+    return jsonify(word=word.word)
 
 if __name__ == "__main__":
+    db.create_all()  # データベースとテーブルを作成します。
     app.run(debug=True)
