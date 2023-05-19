@@ -12,7 +12,7 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 #    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 #    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL'] # Heroku
 
-SQLALCHEMY_DATABASE_URI = 'postgres://ddsllujzsltuhx:db525577117eb2c7661c4e13e7bb9894039eff2a80699fec05bc65dd8a706005@ec2-34-193-110-25.compute-1.amazonaws.com:5432/d7696h6kmr48s0'
+SQLALCHEMY_DATABASE_URI = 'postgres:///ddsllujzsltuhx:db525577117eb2c7661c4e13e7bb9894039eff2a80699fec05bc65dd8a706005@ec2-34-193-110-25.compute-1.amazonaws.com:5432/d7696h6kmr48s0'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL'] # Heroku
     
 db = SQLAlchemy(app)
