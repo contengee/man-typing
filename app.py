@@ -4,8 +4,11 @@ import random
 import os
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
+if os.environ.get('DATABASE_URL') is None:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')  # これはHerokuのPostgreSQLの接続文字列
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'  # SQLiteデータベースのパス
 db = SQLAlchemy(app)
 
 class Word(db.Model):
