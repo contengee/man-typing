@@ -4,10 +4,13 @@ import random
 import os
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
-if os.environ.get('DATABASE_URL') is None:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+
+# Herokuにデプロイされた場合は、Herokuが提供する環境変数からデータベースの接続情報を取得します
+if 'DATABASE_URL' in os.environ:
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')  # これはHerokuのPostgreSQLの接続文字列
+    # Heroku以外の環境
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 
 db = SQLAlchemy(app)
 
