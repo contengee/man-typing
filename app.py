@@ -37,5 +37,5 @@ class Word(db.Model):
         return jsonify(word=word.word)
 
     if __name__ == "__main__":
-db.create_all()  # データベースとテーブルを作成します。        
-app.run(debug=True)
+    db.create_all()  # データベースとテーブルを作成します。        
+    app.run(debug=True)
