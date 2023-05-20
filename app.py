@@ -5,15 +5,17 @@ import os
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
-if os.environ.get('DATABASE_URL') is None:
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///sqlite:////tmp/test.db'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
-else:
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+#if os.environ.get('DATABASE_URL') is None:
+#    SQLALCHEMY_DATABASE_URI = 'sqlite:///sqlite:////tmp/test.db'
+#    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+#else:
+#    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+#    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+
+SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
         
 db = SQLAlchemy(app)
-
 
 class Word(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -33,21 +35,6 @@ def index():
 def random_word():
     word = random.choice(Word.query.all())
     return jsonify(word=word.word)
-
-#@app.route('/create_db')
-#def create_db():
-#    db.create_all()
-#    return "DB created."
-
-@app.route('/add_words')
-def add_words():
-    words = ["apple", "banana", "cherry", "date", "elderberry"]
-    for word in words:
-        word = Word(word=word)
-        db.session.add(word)
-    db.session.commit()
-    return "Words added."
-
 
 if __name__ == "__main__":
     db.create_all()  # データベースとテーブルを作成します。        
