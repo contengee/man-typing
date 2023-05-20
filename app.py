@@ -5,12 +5,13 @@ import os
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
-#if os.environ.get('DATABASE_URL') is None:
-#    SQLALCHEMY_DATABASE_URI = 'sqlite:///sqlite:////tmp/test.db'
-#    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
-#else:
-SQLALCHEMY_DATABASE_URI = os.environ.get('HEROKU_POSTGRESQL_YELLOW_URL')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['HEROKU_POSTGRESQL_YELLOW_URL']
+if os.environ.get('DATABASE_URL') is None:
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///sqlite:////tmp/test.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+else:
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+
 db = SQLAlchemy(app)
 
 class Word(db.Model):
