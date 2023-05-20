@@ -12,7 +12,6 @@ else:
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
-
 db = SQLAlchemy(app)
 
 class Word(db.Model):
@@ -25,15 +24,15 @@ class Word(db.Model):
     def __repr__(self):
         return '<Word %r>' % self.word
 
-    @app.route('/')
-    def index():
-        return render_template('index.html')  # index.htmlはフロントエンドのHTMLファイル名です.
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-    @app.route('/api/word')
-    def random_word():
-        word = random.choice(Word.query.all())
-        return jsonify(word=word.word)
+@app.route('/api/word')
+def random_word():
+    word = random.choice(Word.query.all())
+    return jsonify(word=word.word)
 
-    if __name__ == "__main__":
-        db.create_all()  # データベースとテーブルを作成します。        
-        app.run(debug=True)
+if __name__ == "__main__":
+    db.create_all()
+    app.run(debug=True)
