@@ -39,6 +39,16 @@ def random_word():
 #    db.create_all()
 #    return "DB created."
 
+@app.route('/add_words')
+def add_words():
+    words = ["apple", "banana", "cherry", "date", "elderberry"]
+    for word in words:
+        word = Word(word=word)
+        db.session.add(word)
+    db.session.commit()
+    return "Words added."
+
+
 if __name__ == "__main__":
     db.create_all()  # データベースとテーブルを作成します。        
     app.run(debug=True)
