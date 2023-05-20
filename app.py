@@ -12,8 +12,8 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 #    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 #    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
-SQLALCHEMY_DATABASE_URI = os.environ.get('HEROKU_POSTGRESQL_YELLOW_URL')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['HEROKU_POSTGRESQL_YELLOW_URL']
+DATABASE_URL = os.environ.get('HEROKU_POSTGRESQL_YELLOW_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
         
 db = SQLAlchemy(app)
 
