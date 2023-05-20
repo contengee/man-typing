@@ -34,10 +34,10 @@ def random_word():
     word = random.choice(Word.query.all())
     return jsonify(word=word.word)
 
-@app.route('/create_db')
-def create_db():
-    db.create_all()
-    return "DB created."
+#@app.route('/create_db')
+#def create_db():
+#    db.create_all()
+#    return "DB created."
 
 if __name__ == "__main__":
     db.create_all()  # データベースとテーブルを作成します。        
