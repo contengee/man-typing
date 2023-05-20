@@ -34,6 +34,6 @@ class Word(db.Model):
         word = random.choice(Word.query.all())
         return jsonify(word=word.word)
 
-    if __name__ == "__main__":
-        db.create_all()  # データベースとテーブルを作成します。        
-        app.run(debug=True)
+if __name__ == "__main__":
+    db.create_all()  # データベースとテーブルを作成します。        
+    app.run(debug=True)
